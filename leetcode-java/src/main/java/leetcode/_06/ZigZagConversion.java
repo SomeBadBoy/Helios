@@ -9,7 +9,52 @@ import java.text.MessageFormat;
 public class ZigZagConversion {
     String format = "第{0}组第{1}个的序号为{2}, 展示位置为{3}";
 
+    /**
+     * like this
+     * <p>
+     * A       I       Q
+     * B     H J     P R
+     * C   G   K   O   S
+     * D F     L N     T
+     * E       M       U
+     */
     public String convert(String s, int numRows) {
+        if (s == null || s.equals("") || numRows <= 1) {
+            return s;
+        }
+        StringBuilder[] sbs = new StringBuilder[numRows];
+        int idx = 0;
+        boolean backward = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+//            System.out.println(i + ":" + pos + ":" + idx);
+            if (sbs[idx] == null) {
+                sbs[idx] = new StringBuilder();
+            }
+            sbs[idx].append(c);
+            if (idx == numRows - 1) {
+                backward = true;
+            } else if (idx == 0) {
+                backward = false;
+            }
+            if (backward) {
+                idx--;
+            } else {
+                idx++;
+            }
+        }
+
+        StringBuilder res = new StringBuilder();
+        for (int i = 0; i < sbs.length; i++) {
+//            System.out.println(i + ":" + sbs[i]);
+            if (sbs[i] != null && sbs[i].length() > 0) {
+                res.append(sbs[i]);
+            }
+        }
+        return res.toString();
+    }
+
+    public String convert_v2(String s, int numRows) {
         if (s == null || s.equals("") || numRows <= 1) {
             return s;
         }
@@ -27,7 +72,7 @@ public class ZigZagConversion {
                 index += i;
                 int k = 0;
                 // 当前行的上几行的总和
-                k += i/2 * per * 2 + ((i + 1) / 2) * per;
+                k += i / 2 * per * 2 + ((i + 1) / 2) * per;
                 // 当前行的左几列的总和
                 k += (i & 1) == 1 ? j : 2 * j;
                 System.out.println(MessageFormat.format(format, j, i, index, k));
