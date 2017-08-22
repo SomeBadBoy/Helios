@@ -1,5 +1,7 @@
 package leetcode._02;
 
+import leetcode.base.ListNode;
+
 /**
  * @author wenqi.wei created on 16/11/26
  * @version 1.0
@@ -22,14 +24,5 @@ public class AddTwoSum {
             }
         }
         return root.next;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        public ListNode(int x) {
-            val = x;
-        }
     }
 }
